@@ -17,6 +17,19 @@ function ROUNDROBINSCHEDULE(teamsArray) {
 
   for (let round = 0; round < roundsCount; round++) {
     let games = [];
+    let roundTeams = [...teamsArray];
+    let teamsToRotate = roundTeams.slice(1);
+    // Perform the rotation in place without using the external SHIFTROTATE function
+    if (round === 0) {
+      roundTeams = teamsToRotate;
+    } else {
+      const firstPart = teamsToRotate.slice(0, round);
+      const secondPart = teamsToRotate.slice(round);
+      roundTeams = [...secondPart, ...firstPart];
+    }
+
+    console.log(roundTeams);
+
     for (let game = 0; game < gamesPerRound; game++) {
       // Calculate the index for the home and away teams
       const homeIndex = (round + game) % teamsCount;
@@ -31,10 +44,6 @@ function ROUNDROBINSCHEDULE(teamsArray) {
         }
       }
     }
-    // If we couldn't find enough unique games, throw an error
-    if (games.length !== gamesPerRound) {
-      throw new Error("Not enough unique games can be scheduled.");
-    }
     rounds.push(games);
   }
   let gameNumber = 1;
@@ -44,4 +53,4 @@ function ROUNDROBINSCHEDULE(teamsArray) {
   return flattenedRounds;
 }
 
-console.log(ROUNDROBINSCHEDULE(["A", "B", "C", "D", "E", "F"]));
+ROUNDROBINSCHEDULE(["A", "B", "C", "D", "E", "F"]);
