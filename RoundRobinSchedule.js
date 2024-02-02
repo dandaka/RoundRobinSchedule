@@ -1,4 +1,4 @@
-function ROUNDROBINSCHEDULE(teamsArray) {
+function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
   if (!Array.isArray(teamsArray)) {
     throw new Error("Input must be an array");
   }
@@ -9,17 +9,20 @@ function ROUNDROBINSCHEDULE(teamsArray) {
   }
 
   const gamesPerRound = teamsArray.length / 2;
-  const teamsCount = teamsArray.length;
   const roundsCount = teamsArray.length - 1;
 
+  if (courtsArray) {
+    courtsArray = courtsArray.slice(0, gamesPerRound);
+  } else {
+    courtsArray = Array.from({ length: gamesPerRound }, (_, i) => i + 1);
+  }
+
   let rounds = [];
-  let previousMatchups = new Set();
 
   for (let round = 0; round < roundsCount; round++) {
     let games = [];
     let roundTeams = [...teamsArray];
     let teamsToRotate = roundTeams.slice(1);
-    // Perform the rotation in place without using the external SHIFTROTATE function
     if (round === 0) {
       roundTeams = teamsToRotate;
     } else {
@@ -28,11 +31,7 @@ function ROUNDROBINSCHEDULE(teamsArray) {
       roundTeams = [...secondPart, ...firstPart];
     }
 
-    // console.log(roundTeams);
-
     let roundTeamsSorted = [teamsArray[0], ...roundTeams];
-
-    // console.log(roundTeamsSorted);
 
     const step = roundTeamsSorted.length / 2;
     for (let i = 0; i < step; i++) {
@@ -40,13 +39,14 @@ function ROUNDROBINSCHEDULE(teamsArray) {
       const team2 = roundTeamsSorted[i + step];
       games.push([team1, team2]);
     }
-    console.log(games);
-
+    // console.log(games);
+    rounds.push(games);
   }
   let gameNumber = 1;
   var flattenedRounds = rounds.flatMap((games, roundIndex) =>
     games.map((game) => [gameNumber++, roundIndex + 1, game[0], game[1]])
   );
+  console.log(flattenedRounds);
   return flattenedRounds;
 }
 
