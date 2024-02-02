@@ -3,7 +3,7 @@ function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
     throw new Error("Input must be an array");
   }
   // Flatten the array in case of nested single-element arrays
-  teamsArray = teamsArray.flat();
+  teamsArray = teamsArray.flat().filter(team => team.length > 0);
   if (teamsArray.length % 2 !== 0) {
     throw new Error("Number of entries in the array must be divisible by 2");
   }
