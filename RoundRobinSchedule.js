@@ -28,23 +28,20 @@ function ROUNDROBINSCHEDULE(teamsArray) {
       roundTeams = [...secondPart, ...firstPart];
     }
 
-    console.log(roundTeams);
+    // console.log(roundTeams);
 
-    for (let game = 0; game < gamesPerRound; game++) {
-      // Calculate the index for the home and away teams
-      const homeIndex = (round + game) % teamsCount;
-      const awayIndex = (teamsCount - 1 - game + round) % teamsCount;
-      // Ensure that we don't match a team with itself or repeat a matchup
-      if (homeIndex !== awayIndex) {
-        const matchup = `${teamsArray[homeIndex]} vs ${teamsArray[awayIndex]}`;
-        const reverseMatchup = `${teamsArray[awayIndex]} vs ${teamsArray[homeIndex]}`;
-        if (!previousMatchups.has(matchup) && !previousMatchups.has(reverseMatchup)) {
-          games.push([teamsArray[homeIndex], teamsArray[awayIndex]]);
-          previousMatchups.add(matchup);
-        }
-      }
+    let roundTeamsSorted = [teamsArray[0], ...roundTeams];
+
+    // console.log(roundTeamsSorted);
+
+    const step = roundTeamsSorted.length / 2;
+    for (let i = 0; i < step; i++) {
+      const team1 = roundTeamsSorted[i];
+      const team2 = roundTeamsSorted[i + step];
+      games.push([team1, team2]);
     }
-    rounds.push(games);
+    console.log(games);
+
   }
   let gameNumber = 1;
   var flattenedRounds = rounds.flatMap((games, roundIndex) =>
