@@ -3,7 +3,7 @@ function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
     throw new Error("Input must be an array");
   }
   // Flatten the array in case of nested single-element arrays
-  teamsArray = teamsArray.flat().filter(team => team.length > 0);
+  teamsArray = teamsArray.flat().filter((team) => team.length > 0);
   if (teamsArray.length % 2 !== 0) {
     throw new Error("Number of entries in the array must be divisible by 2");
   }
@@ -44,7 +44,13 @@ function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
   }
   let gameNumber = 1;
   var flattenedRounds = rounds.flatMap((games, roundIndex) =>
-    games.map((game) => [gameNumber++, roundIndex + 1, game[0], game[1]])
+    games.map((game) => [
+      gameNumber++,
+      roundIndex + 1,
+      courtsArray[(gameNumber+1) % gamesPerRound],
+      game[0],
+      game[1],
+    ])
   );
   console.log(flattenedRounds);
   return flattenedRounds;
