@@ -27,7 +27,6 @@ function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
   for (let round = 0; round < roundsCount; round++) {
     let games = [];
     let roundTeams = [...teamsArray];
-    console.log(roundTeams);
     let teamsToRotate = roundTeams.slice(1);
     if (round === 0) {
       roundTeams = teamsToRotate;
@@ -38,6 +37,11 @@ function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
     }
 
     let roundTeamsSorted = [teamsArray[0], ...roundTeams];
+
+    const half = Math.ceil(roundTeamsSorted.length / 2);
+    const firstHalf = roundTeamsSorted.slice(0, half);
+    const secondHalf = roundTeamsSorted.slice(half).reverse();
+    roundTeamsSorted = [...firstHalf, ...secondHalf];
 
     const step = roundTeamsSorted.length / 2;
     for (let i = 0; i < step; i++) {
@@ -63,6 +67,11 @@ function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
     })
   );
 
+  
+
+  // Optionally call the function with flattenedRounds as parameter
+  // calculatePairFrequency(flattenedRounds);
+
   return flattenedRounds;
 }
 
@@ -78,4 +87,28 @@ var a = ROUNDROBINSCHEDULE(
   ["C7", "C6", "C5"]
 );
 
-console.log(a);
+function calculatePairFrequency(matches) {
+  const pairFrequency = {};
+
+  matches.forEach(match => {
+    const pair = `${match[3]} vs ${match[4]}`;
+    if (pairFrequency[pair]) {
+      pairFrequency[pair] += 1;
+    } else {
+      pairFrequency[pair] = 1;
+    }
+  });
+
+  const uniquePairs = Object.keys(pairFrequency).length;
+  const totalPairs = matches.length;
+  const duplicates = Object.values(pairFrequency).some(count => count > 1);
+
+  if (duplicates) {
+    console.log("There are pairs that play more than once.");
+  } else {
+    console.log("All pairs are unique.");
+  }
+
+  console.log(`Total unique pairs: ${uniquePairs}, Total pairs: ${totalPairs}`);
+  console.log("Frequency of each pair:", pairFrequency);
+}
