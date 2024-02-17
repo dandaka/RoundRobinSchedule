@@ -1,4 +1,4 @@
-function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
+export function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
   if (!Array.isArray(teamsArray)) {
     throw new Error("Input must be an array");
   }

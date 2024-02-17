@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "deno run AllSchedules.js",
+			"type": "shell",
+			"command": "deno run AllSchedules.js",
+			"group": "build",
+			"problemMatcher": [
+				"$deno"
+			]
+		}
+	]
+}
