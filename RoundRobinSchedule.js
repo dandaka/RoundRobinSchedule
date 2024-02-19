@@ -75,18 +75,6 @@ export function ROUNDROBINSCHEDULE(teamsArray, courtsArray) {
   return flattenedRounds;
 }
 
-var a = ROUNDROBINSCHEDULE(
-  [
-    "T1 Boris / Mark",
-    "T2 Dov / Nuno VP",
-    "T3 Seya / Jj",
-    "T4 Vlad / Afonso",
-    "T5 Cesar / Nacho",
-    "T6 Shirish / Mono",
-  ],
-  ["C7", "C6", "C5"]
-);
-
 function calculatePairFrequency(matches) {
   const pairFrequency = {};
 
